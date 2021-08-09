@@ -8,73 +8,65 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="{%static 'styles.css' %}">
-    <script src="https://kit.fontawesome.com/ce5570254b.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/6c0d30cb0e.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-    <nav class="navbar background h-nav">
-        <ul class="nav-list1 v-class">
-            <div class="logo"><img src="{% static 'img/logo.png'%}" alt="logo"></div>
-            <div class="text-big ">Personal Publication Repository </div>
-
-        </ul>
-        <div class="rightNav">
-              
-                {% if user.is_authenticated %}
+	
+	<header class="header">
+		<!-- Use any element to open the sidenav -->
+		{% if user.is_authenticated %}
+			<span  onclick="openNav()"><i class="fas fa-bars"></i></span>
+		{% endif %}
+				<h3 class="logo">
+					<a href="#">
+						<i class="fas fa-journal-whills"></i>
+						Personal Publication Repository
+					</a>
+				</h3>
+      <ul class="main-nav">
+		{% if user.is_authenticated %}
                 <form action="{% url 'accounts:logout' %}" method="POST">
                     {%csrf_token%}
-                    <button type="submit"class="btn btn-dark">Log Out</buttton>
+                    <li><button type="submit">Log Out</button></li>
                 </form>
 
-                
-
-              {% else %}
-              <li><a href="{% url 'accounts:login' %}" class="btn btn-dark">LogIn</a></li>
-              <li><a href="{% url 'accounts:signup' %}" class="btn btn-dark">SignUp</a></li>
+        {% else %}
+              <li><a href="{% url 'accounts:login' %}" >LogIn</a></li>
+              <li><a href="{% url 'accounts:signup' %}" >SignUp</a></li>
                
               {% endif %}
-
-        </div>
-       
-
-    </nav>
-    <section class="firstSection">
-    <div class="box-main background2">
-        {% if user.is_authenticated %}
-        <div class="firsthalf background">
+      </ul>
+	</header> 
+	
                 
-            <ul class="nav_list">
-                {% if user.is_authenticated %}
-                <li><a href="{% url 'article:list'%}"><i class="fas fa-home"></i>Home</a></li>
-                <li><a href="#Profile"><i class="fas fa-id-badge"></i> Profile</a></li>
-                <li><i class="fas fa-plus-circle"></i>Add New Post <i class="fas fa-caret-down"></i></li>
-                <ul class="create-list">
-                    <li><a href="{% url 'article:create' type='journal'%}"><i class="far fa-newspaper"></i>Journal article</a> </li>
-                    <li><a href="{% url 'article:create' type='conference'%}"><i class="fas fa-newspaper"></i>Conference</a> </li>
-                    <li><a href="{% url 'article:create' type='Book'%}"><i class="fas fa-book"></i>Book</a> </li>
-                    <li><a href="{% url 'article:bibtex-upload' %}"><i class="fas fa-upload"></i>Bibtex Upload</a> </li>
-                  
-                </ul>
-                <li><a href="#Search"><i class="fas fa-search"></i>Search</a></li>
-                {% endif %}
-               
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<a href="{% url 'article:list'%}">Home</a>
+		<a href="#Profile">Profile</a>
+		<h3>Add New Post</h3>
+		<a href="{% url 'article:create' type='journal'%}">&nbsp;Journal Article</a>
+		<a href="{% url 'article:create' type='conference'%}">&nbsp;Conference</a>
+		<a href="{% url 'article:create' type='Book'%}">&nbsp;Book</a>
+		<a href="{% url 'article:bibtex-upload' %}"><i class="fas fa-upload"></i>Bibtex Upload</a>
+		<a href="#Search"><i class="fas fa-search"></i>Search</a>
+	</div>  
 
-            </ul>
-        {% endif %}
-
-        </div>
-
-        
-
-        
-        <div class="secondhalf">
-            {% block content %}
-            {% endblock %}
-        </div>
+    <div class="secondhalf">
+        {% block content %}
+        {% endblock %}
     </div>
-</section>
 
 </body>
+<script type="text/javascript">
+	/* Set the width of the side navigation to 250px */
+function openNav() {
+  document.getElementById("mySidenav").style.width = "250px";
+}
+
+/* Set the width of the side navigation to 0 */
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+</script>
 </html>
