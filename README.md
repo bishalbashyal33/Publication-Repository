@@ -55,7 +55,7 @@
 
 
 
-This is the project by student group of 075BCTAB. A software engineering project that is created using django as backend and bootstrap, html and css as frontend. 
+This is a software engineering capstone project, designed to serve as a publication repository for faculties in the Pulchowk Campus Computer Science Department.
 
 
 
